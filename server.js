@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true}))
 
 const fetchResults = async (zipSearch) =>{
     try{
-        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zipSearch}&appid=${process.env.API_KEY}`;
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zipSearch}&units=imperial&appid=${process.env.API_KEY}`;
         const response = await fetch(apiUrl)
 
         const data = await response.json()
@@ -34,17 +34,19 @@ app.get('/', (req, res) => {
 app.post('/weather', async (req, res) => {
     const zipCode = req.body.zipCode
     const data = await fetchResults(req.body.zipCode)
-    console.log(data)
-    console.log(req.body)
+    console.log('data:', data)
+    console.log('req.body:', req.body)
     if (!data || data.cod != 200) {
         return res.render('index.ejs', { results: []});
     }
-    res.redirect('/weather/show')
+    res.render('show.ejs', { data })
 })
 
-app.get('/weather/show', (req, res) => {
-    res.render('show.ejs')
-})
+// app.get('/weather/show', (req, res) => {
+//     const zipCode = req.body.zipCode
+//     const data = fetchResults(req.body.zipCode)
+//     res.render('show.ejs', { data })
+// })
 
 
 
