@@ -4,7 +4,6 @@ require('dotenv').config()
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-
 ////////////////////////
 // MIDDLEWARE
 ////////////////////////
@@ -41,14 +40,6 @@ app.post('/weather', async (req, res) => {
     }
     res.render('show.ejs', { data })
 })
-
-// app.get('/weather/show', (req, res) => {
-//     const zipCode = req.body.zipCode
-//     const data = fetchResults(req.body.zipCode)
-//     res.render('show.ejs', { data })
-// })
-
-
 
 app.listen(PORT, () => {
     console.log('Welcome to the Thunderdome!')
